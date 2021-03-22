@@ -9,8 +9,13 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
 class Student < ActiveRecord::Base
   has_many :classroom_students
   has_many :classrooms, through: :classroom_students
+
+  def self.search(search_term)
+    search_term.empty? ? Student.all : Student.where("name LIKE ?", "%#{search_term}%")
+  end
+
+
 end
